@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Horizon Recognition Program — program presentation.">
+  <title data-i18n="page.presentation">Program Presentation · Horizon Recognition Program</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231428a0'/%3E%3Cpath d='M10 26a10 10 0 0 1 20 0' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M7 30h26' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<!-- The presentation is always rendered in the light theme. -->
+<body data-page="presentation" data-force-theme="light" class="presentation-body">
+  <script src="src/theme.js"></script>
+
+  <header class="deck-header">
+    <a class="brand" href="index.html" aria-label="Horizon Recognition Program">
+      <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="10" class="brand-logo-bg"/>
+        <path d="M10 26a10 10 0 0 1 20 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M7 30h26" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M20 9v4M11.5 13l2.5 2.5M28.5 13 26 15.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">Horizon</span>
+        <span class="brand-sub" data-i18n="app.programName">Recognition Program</span>
+      </span>
+    </a>
+    <div class="header-actions">
+      <a class="btn btn-secondary btn-sm" href="index.html" data-i18n="deck.backToApp">Open the platform</a>
+      <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="pt">PT</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="deck" id="deck" aria-roledescription="carousel" data-i18n-aria-label="deck.label" aria-label="Program presentation">
+
+    <!-- 1. Cover -->
+    <section class="slide slide-cover is-active" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.cover.eyebrow">2026 cycle</span>
+        <h1 class="cover-title"><span>Horizon</span> <span data-i18n="app.programName">Recognition Program</span></h1>
+        <p class="cover-subtitle" data-i18n="deck.cover.subtitle">Celebrating the people and teams who move us forward — with a transparent, criteria-based process.</p>
+        <div class="cover-badges">
+          <span class="tier-badge tier-s"><span class="tier-stars">★★★</span><span class="tier-letter">S</span></span>
+          <span class="tier-badge tier-a"><span class="tier-stars">★★</span><span class="tier-letter">A</span></span>
+          <span class="tier-badge tier-b"><span class="tier-stars">★</span><span class="tier-letter">B</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Purpose -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.purpose.eyebrow">Why</span>
+        <h2 data-i18n="deck.purpose.title">Purpose of the Program</h2>
+        <div class="slide-grid three">
+          <div class="slide-card"><span class="slide-icon" aria-hidden="true">🎯</span><h3 data-i18n="deck.purpose.c1.title">Recognize impact</h3><p data-i18n="deck.purpose.c1.text">Reward contributions that create measurable value for the business, the culture and our customers.</p></div>
+          <div class="slide-card"><span class="slide-icon" aria-hidden="true">⚖️</span><h3 data-i18n="deck.purpose.c2.title">Fair and transparent</h3><p data-i18n="deck.purpose.c2.text">Same criteria for everyone, independent board evaluation and declared conflicts of interest.</p></div>
+          <div class="slide-card"><span class="slide-icon" aria-hidden="true">🤝</span><h3 data-i18n="deck.purpose.c3.title">Open to all</h3><p data-i18n="deck.purpose.c3.text">Any employee can nominate a colleague, a whole team or themselves — managers, peers or direct reports.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Categories -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.categories.eyebrow">What</span>
+        <h2 data-i18n="deck.categories.title">Three award categories</h2>
+        <div class="slide-grid three" id="deck-categories"></div>
+      </div>
+    </section>
+
+    <!-- 4. Scoring -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.scoring.eyebrow">How</span>
+        <h2 data-i18n="deck.scoring.title">Scoring criteria</h2>
+        <div class="slide-grid two">
+          <div class="slide-card">
+            <h3 data-i18n="deck.scoring.relevanceTitle">Relevance (up to 50 pts)</h3>
+            <ul class="slide-list">
+              <li><strong>15</strong> <span data-i18n="relevance.desc.15">Relevant — impact on one team or project.</span></li>
+              <li><strong>30</strong> <span data-i18n="relevance.desc.30">Significant — impact across multiple areas.</span></li>
+              <li><strong>50</strong> <span data-i18n="relevance.desc.50">Exceptional — organization-wide impact.</span></li>
+            </ul>
+          </div>
+          <div class="slide-card">
+            <h3 data-i18n="deck.scoring.criteriaTitle">5 criteria (up to 50 pts)</h3>
+            <ul class="slide-list">
+              <li><span class="grade-chip grade-s">S</span> <span data-i18n="guide.s">Exceptional — 10 pts</span></li>
+              <li><span class="grade-chip grade-a">A</span> <span data-i18n="guide.a">Significant — 7 pts</span></li>
+              <li><span class="grade-chip grade-b">B</span> <span data-i18n="guide.b">Relevant — 4 pts</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">
+          <span data-i18n="score.relevance">Relevance</span> <span class="op">+</span> <span data-i18n="deck.scoring.sum">Σ 5 criteria</span> <span class="op">=</span> <strong data-i18n="deck.scoring.max">max. 100 pts</strong>
+          <span class="formula-note" data-i18n="deck.scoring.min">Minimum of 60 points to be eligible</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Prize tiers -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.prizes.eyebrow">Rewards</span>
+        <h2 data-i18n="deck.prizes.title">Prize tiers by ranking position</h2>
+        <div class="slide-grid three">
+          <div class="slide-card prize-card prize-s"><span class="tier-badge tier-s"><span class="tier-stars">★★★</span><span class="tier-letter">S</span></span><h3 data-i18n="deck.prizes.first">1st place</h3><p class="prize-value">HZ$ 10.000,00</p></div>
+          <div class="slide-card prize-card prize-a"><span class="tier-badge tier-a"><span class="tier-stars">★★</span><span class="tier-letter">A</span></span><h3 data-i18n="deck.prizes.second">2nd place</h3><p class="prize-value">HZ$ 5.000,00</p></div>
+          <div class="slide-card prize-card prize-b"><span class="tier-badge tier-b"><span class="tier-stars">★</span><span class="tier-letter">B</span></span><h3 data-i18n="deck.prizes.third">3rd to 5th place</h3><p class="prize-value">HZ$ 3.000,00</p></div>
+        </div>
+        <ul class="slide-notes">
+          <li data-i18n="deck.prizes.note1">Tiers come from the position in the category ranking — not from the raw score.</li>
+          <li data-i18n="deck.prizes.note2">1-star limits per category: Business 10 · Cultural 5 · Innovation 5.</li>
+          <li data-i18n="deck.prizes.note3">Group nominations: the prize is split equally between all members.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. Process cycle -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.process.eyebrow">When</span>
+        <h2 data-i18n="deck.process.title">The process cycle</h2>
+        <ol class="process-flow">
+          <li><span class="process-step">1</span><h3 data-i18n="deck.process.s1.title">Nominate</h3><p data-i18n="deck.process.s1.text">Anyone submits a nomination with a live score (min. 60).</p></li>
+          <li><span class="process-step">2</span><h3 data-i18n="deck.process.s2.title">Review</h3><p data-i18n="deck.process.s2.text">People &amp; Culture checks eligibility and moves it to review.</p></li>
+          <li><span class="process-step">3</span><h3 data-i18n="deck.process.s3.title">Board</h3><p data-i18n="deck.process.s3.text">Each board member scores independently and declares conflicts.</p></li>
+          <li><span class="process-step">4</span><h3 data-i18n="deck.process.s4.title">Ranking</h3><p data-i18n="deck.process.s4.text">Final score = average of the evaluations without conflict.</p></li>
+          <li><span class="process-step">5</span><h3 data-i18n="deck.process.s5.title">Award</h3><p data-i18n="deck.process.s5.text">Approved winners receive their prize by tier and position.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="slide" aria-roledescription="slide">
+      <div class="slide-inner">
+        <span class="eyebrow" data-i18n="deck.faq.eyebrow">Questions</span>
+        <h2 data-i18n="deck.faq.title">Frequently asked questions</h2>
+        <div class="faq-list">
+          <details open><summary data-i18n="deck.faq.q1">Can I nominate myself?</summary><p data-i18n="deck.faq.a1">Yes. Choose "Myself" under "Who is this nomination for?" and your details are copied to the nominee section. Self-nominations are individual and go through the same board evaluation.</p></details>
+          <details><summary data-i18n="deck.faq.q2">What happens if my nomination scores below 60?</summary><p data-i18n="deck.faq.a2">It is not eligible: the platform explains the minimum, clears the form and nothing is saved.</p></details>
+          <details><summary data-i18n="deck.faq.q3">Does the nominator's score count in the final result?</summary><p data-i18n="deck.faq.a3">No. It is a reference only. The final score is the average of the board evaluations without conflict.</p></details>
+          <details><summary data-i18n="deck.faq.q4">How is a group prize paid?</summary><p data-i18n="deck.faq.a4">The tier amount is divided equally between all group members.</p></details>
+          <details><summary data-i18n="deck.faq.q5">Where is my data stored?</summary><p data-i18n="deck.faq.a5">In this prototype everything stays in your browser (localStorage). Nothing is sent to a server.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="deck-controls" data-i18n-aria-label="deck.controls" aria-label="Slide controls">
+    <button type="button" class="deck-btn" id="deck-prev" data-i18n-aria-label="deck.prev" aria-label="Previous slide">←</button>
+    <div class="deck-dots" id="deck-dots"></div>
+    <span class="deck-counter" id="deck-counter">1 / 7</span>
+    <button type="button" class="deck-btn" id="deck-next" data-i18n-aria-label="deck.next" aria-label="Next slide">→</button>
+  </nav>
+  <div class="deck-progress" aria-hidden="true"><div class="deck-progress-fill" id="deck-progress"></div></div>
+
+  <script src="src/translations.js"></script>
+  <script src="src/core.js"></script>
+  <script>
+    /* Slide navigation: arrows, buttons, dots, swipe and URL hash. */
+    (function () {
+      'use strict';
+      const Core = window.HorizonCore;
+      const I18n = window.I18n;
+      const t = (k, p) => I18n.t(k, p);
+      const slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+      let index = 0;
+
+      function renderCategories() {
+        const container = document.getElementById('deck-categories');
+        container.innerHTML = Core.CATEGORIES.map((c) =>
+          '<div class="slide-card cat-card cat-' + c.id + '">' +
+          '<h3>' + Core.escapeHtml(t('category.' + c.id)) + '</h3>' +
+          '<ul class="slide-list compact">' + c.criteria.map((id) => '<li>' + Core.escapeHtml(t('crit.' + c.id + '.' + id)) + '</li>').join('') + '</ul>' +
+          '<p class="cat-limit">' + Core.escapeHtml(t('deck.categories.limit', { limit: Core.ONE_STAR_LIMITS[c.id] })) + '</p>' +
+          '</div>').join('');
+      }
+
+      function renderDots() {
+        document.getElementById('deck-dots').innerHTML = slides.map((s, i) =>
+          '<button type="button" class="deck-dot' + (i === index ? ' active' : '') + '" data-go="' + i + '" aria-label="' + Core.escapeHtml(t('deck.goTo', { n: i + 1 })) + '"></button>').join('');
+      }
+
+      function go(target) {
+        index = Math.max(0, Math.min(slides.length - 1, target));
+        slides.forEach((s, i) => {
+          s.classList.toggle('is-active', i === index);
+          s.classList.toggle('is-before', i < index);
+          s.setAttribute('aria-hidden', String(i !== index));
+        });
+        document.getElementById('deck-counter').textContent = (index + 1) + ' / ' + slides.length;
+        document.getElementById('deck-progress').style.width = ((index + 1) / slides.length * 100) + '%';
+        document.getElementById('deck-prev').disabled = index === 0;
+        document.getElementById('deck-next').disabled = index === slides.length - 1;
+        renderDots();
+        if (history.replaceState) history.replaceState(null, '', '#slide-' + (index + 1));
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        I18n.init();
+        renderCategories();
+        const match = /#slide-(\d+)/.exec(location.hash);
+        go(match ? Number(match[1]) - 1 : 0);
+
+        document.getElementById('deck-prev').addEventListener('click', () => go(index - 1));
+        document.getElementById('deck-next').addEventListener('click', () => go(index + 1));
+        document.getElementById('deck-dots').addEventListener('click', (e) => {
+          const dot = e.target.closest('[data-go]');
+          if (dot) go(Number(dot.dataset.go));
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.target.closest && e.target.closest('summary, input, select, textarea')) return;
+          if (['ArrowRight', 'PageDown', ' '].indexOf(e.key) !== -1) { e.preventDefault(); go(index + 1); }
+          if (['ArrowLeft', 'PageUp'].indexOf(e.key) !== -1) { e.preventDefault(); go(index - 1); }
+          if (e.key === 'Home') go(0);
+          if (e.key === 'End') go(slides.length - 1);
+        });
+        let startX = null;
+        document.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+          if (startX === null) return;
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 50) go(index + (dx < 0 ? 1 : -1));
+          startX = null;
+        });
+        document.addEventListener('languagechange', () => { renderCategories(); renderDots(); });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Horizon Recognition Program — restricted access for the Evaluation Board and Administration.">
+  <meta name="robots" content="noindex">
+  <title data-i18n="page.login">Sign in · Horizon Recognition Program</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231428a0'/%3E%3Cpath d='M10 26a10 10 0 0 1 20 0' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M7 30h26' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/auth.js"></script>
+</head>
+<body data-page="login">
+  <script src="src/theme.js"></script>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Horizon Recognition Program">
+        <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" class="brand-logo-bg"/>
+          <path d="M10 26a10 10 0 0 1 20 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M7 30h26" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M20 9v4M11.5 13l2.5 2.5M28.5 13 26 15.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">Horizon</span>
+          <span class="brand-sub" data-i18n="app.programName">Recognition Program</span>
+        </span>
+      </a>
+      <nav class="main-nav" data-i18n-aria-label="nav.label" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" data-i18n="nav.nominate">Nominate</a>
+        <a href="board.html" class="nav-link" data-auth-link="board"><span data-i18n="nav.board">Board</span></a>
+        <a href="admin.html" class="nav-link" data-auth-link="admin"><span data-i18n="nav.admin">Admin</span></a>
+        <a href="presentation.html" class="nav-link" data-i18n="nav.program">Program</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="pt">PT</button>
+        </div>
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page login-page">
+    <section class="login-card card" aria-labelledby="login-title">
+      <div class="login-icon" aria-hidden="true">🔐</div>
+      <h1 id="login-title" data-i18n="login.title">Restricted access</h1>
+      <p class="section-hint login-subtitle" data-i18n="login.subtitle">The Evaluation Board and Administration panels are available to authorized users only.</p>
+
+      <div id="login-notice" class="alert" role="status" hidden></div>
+
+      <!-- Shown when the visitor already has a valid session -->
+      <div id="signed-in" class="signed-in" hidden>
+        <div class="user-chip signed-in-chip">
+          <span class="avatar" id="signed-avatar" aria-hidden="true">--</span>
+          <span class="user-info">
+            <span class="user-name" id="signed-name"></span>
+            <span class="user-role" id="signed-role"></span>
+          </span>
+        </div>
+        <div class="signed-in-actions">
+          <a href="board.html" class="btn btn-primary" id="signed-continue"></a>
+          <button type="button" class="btn btn-secondary" id="switch-user" data-i18n="login.switchUser">Sign out and switch user</button>
+        </div>
+      </div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-id"><span data-i18n="login.id">Worker ID</span> <span class="req">*</span></label>
+          <input type="text" id="login-id" inputmode="numeric" maxlength="8" autocomplete="username" data-i18n-placeholder="person.idPlaceholder" placeholder="8 digits, e.g. 10000001" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password"><span data-i18n="login.password">Password</span> <span class="req">*</span></label>
+          <div class="password-wrap">
+            <input type="password" id="login-password" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" id="toggle-password" aria-pressed="false" data-i18n-aria-label="login.showPassword" aria-label="Show password">👁</button>
+          </div>
+        </div>
+        <div id="login-error" class="alert alert-error" role="alert" hidden></div>
+        <button type="submit" class="btn btn-primary btn-block" id="login-submit" data-i18n="login.submit">Sign in</button>
+      </form>
+
+      <p class="login-footnote" data-i18n="login.footnote">Prototype access control: credentials are checked in the browser only.</p>
+      <a class="login-back" href="index.html" data-i18n="login.back">← Back to nominations</a>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><span data-i18n="footer.text">Horizon Recognition Program · Demonstration prototype — all data stays in your browser.</span></p>
+  </footer>
+
+  <script src="src/translations.js"></script>
+  <script src="src/login.js"></script>
+</body>
+</html>

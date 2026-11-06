@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Horizon Recognition Program — nominate colleagues for recognition awards.">
+  <title data-i18n="page.nominate">Nominate · Horizon Recognition Program</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231428a0'/%3E%3Cpath d='M10 26a10 10 0 0 1 20 0' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M7 30h26' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/auth.js"></script>
+</head>
+<body data-page="nominate">
+  <script src="src/theme.js"></script>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Horizon Recognition Program">
+        <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" class="brand-logo-bg"/>
+          <path d="M10 26a10 10 0 0 1 20 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M7 30h26" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M20 9v4M11.5 13l2.5 2.5M28.5 13 26 15.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">Horizon</span>
+          <span class="brand-sub" data-i18n="app.programName">Recognition Program</span>
+        </span>
+      </a>
+      <nav class="main-nav" data-i18n-aria-label="nav.label" aria-label="Main navigation">
+        <a href="index.html" class="nav-link active" aria-current="page" data-i18n="nav.nominate">Nominate</a>
+        <a href="board.html" class="nav-link" data-auth-link="board"><span data-i18n="nav.board">Board</span></a>
+        <a href="admin.html" class="nav-link" data-auth-link="admin"><span data-i18n="nav.admin">Admin</span></a>
+        <a href="presentation.html" class="nav-link" data-i18n="nav.program">Program</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="pt">PT</button>
+        </div>
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <section class="page-hero">
+      <div class="hero-text">
+        <span class="eyebrow" data-i18n="nominate.eyebrow">Nominations open · 2026 cycle</span>
+        <h1 data-i18n="nominate.title">Recognize outstanding work</h1>
+        <p class="hero-subtitle" data-i18n="nominate.subtitle">Nominate a colleague or a team whose contribution made a real difference. Your nomination is scored live against the program criteria.</p>
+      </div>
+      <ul class="hero-facts">
+        <li><strong>3</strong><span data-i18n="nominate.factCategories">award categories</span></li>
+        <li><strong>100</strong><span data-i18n="nominate.factMax">maximum points</span></li>
+        <li><strong>60</strong><span data-i18n="nominate.factMin">minimum to qualify</span></li>
+      </ul>
+    </section>
+
+    <div class="layout-with-aside">
+      <form id="nomination-form" class="card form-card" novalidate>
+        <!-- 1. Nominator -->
+        <section class="form-section" aria-labelledby="sec-nominator-title">
+          <div class="section-header">
+            <span class="section-number">1</span>
+            <div>
+              <h2 id="sec-nominator-title" data-i18n="form.nominator.title">Nominator</h2>
+              <p class="section-hint" data-i18n="form.nominator.hint">Your details. Type your ID to fill them in from the directory.</p>
+            </div>
+          </div>
+          <div class="form-grid" id="nominator-fields" data-person-prefix="nominator"></div>
+          <div class="form-grid" id="relationship-group">
+            <div class="form-group">
+              <label for="nominator-relationship"><span data-i18n="form.relationship">Relationship with the nominee</span> <span class="req">*</span></label>
+              <select id="nominator-relationship" data-field="nominator.relationship">
+                <option value="" data-i18n="form.selectPlaceholder">Select…</option>
+                <option value="manager" data-i18n="relationship.manager">Manager</option>
+                <option value="peer" data-i18n="relationship.peer">Peer</option>
+                <option value="direct_report" data-i18n="relationship.direct_report">Direct Report</option>
+                <option value="other" data-i18n="relationship.other">Other</option>
+              </select>
+              <p class="field-error" data-error-for="nominator.relationship"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Nominee -->
+        <section class="form-section" aria-labelledby="sec-nominee-title">
+          <div class="section-header">
+            <span class="section-number">2</span>
+            <div>
+              <h2 id="sec-nominee-title" data-i18n="form.nominee.title">Who are you nominating?</h2>
+              <p class="section-hint" data-i18n="form.nominee.hint">Choose an individual or a group. Group prizes are split equally between members.</p>
+            </div>
+          </div>
+          <p class="field-label" id="target-label" data-i18n="form.target">Who is this nomination for?</p>
+          <div class="radio-pills" role="radiogroup" aria-labelledby="target-label">
+            <label class="radio-pill">
+              <input type="radio" name="nomination-target" value="others" checked>
+              <span><span class="pill-icon" aria-hidden="true">🤝</span><span data-i18n="target.others">Someone else</span></span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="nomination-target" value="self">
+              <span><span class="pill-icon" aria-hidden="true">🙋</span><span data-i18n="target.self">Myself</span></span>
+            </label>
+          </div>
+          <div class="alert alert-info self-notice" id="self-notice" role="status" hidden>
+            <span data-i18n="form.selfNotice">Self-nomination: the nominee details are yours and follow the Nominator section. Self-nominations are individual only.</span>
+          </div>
+          <p class="field-error" data-error-for="selfNomination"></p>
+
+          <p class="field-label" id="type-label" data-i18n="form.type">Nomination type</p>
+          <div class="radio-pills" role="radiogroup" aria-labelledby="type-label">
+            <label class="radio-pill">
+              <input type="radio" name="nomination-type" value="individual" checked>
+              <span><span class="pill-icon" aria-hidden="true">👤</span><span data-i18n="type.individual">Individual</span></span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="nomination-type" value="grupo">
+              <span><span class="pill-icon" aria-hidden="true">👥</span><span data-i18n="type.grupo">Group</span></span>
+            </label>
+          </div>
+
+          <div id="individual-fields" class="form-grid" data-person-prefix="nominee"></div>
+
+          <div id="group-fields" hidden>
+            <div id="group-members" class="group-members"></div>
+            <p class="field-error" data-error-for="group"></p>
+            <button type="button" id="add-member" class="btn btn-add">
+              <span aria-hidden="true">+</span> <span data-i18n="form.addMember">Add Member</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 3. Category & criteria -->
+        <section class="form-section" aria-labelledby="sec-category-title">
+          <div class="section-header">
+            <span class="section-number">3</span>
+            <div>
+              <h2 id="sec-category-title" data-i18n="form.category.title">Category and evaluation</h2>
+              <p class="section-hint" data-i18n="form.category.hint">Each category has 5 criteria. Grade each one: S = 10, A = 7, B = 4 points.</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="category"><span data-i18n="form.category">Category</span> <span class="req">*</span></label>
+              <select id="category" data-field="category">
+                <option value="" data-i18n="form.selectCategory">Select a category…</option>
+                <option value="business" data-i18n="category.business">Business/Project Excellence</option>
+                <option value="cultural" data-i18n="category.cultural">Cultural Impact</option>
+                <option value="innovation" data-i18n="category.innovation">Innovation and AI Excellence</option>
+              </select>
+              <p class="field-error" data-error-for="category"></p>
+            </div>
+            <div class="form-group">
+              <label for="relevance"><span data-i18n="form.relevance">Relevance level</span> <span class="req">*</span></label>
+              <select id="relevance" data-field="relevance">
+                <option value="" data-i18n="form.selectRelevance">Select the relevance…</option>
+                <option value="15" data-i18n="relevance.option.15">15 pts — Relevant</option>
+                <option value="30" data-i18n="relevance.option.30">30 pts — Significant</option>
+                <option value="50" data-i18n="relevance.option.50">50 pts — Exceptional</option>
+              </select>
+              <p class="field-help" id="relevance-desc" data-i18n="form.relevanceHelp">How far did the impact reach?</p>
+              <p class="field-error" data-error-for="relevance"></p>
+            </div>
+          </div>
+          <div id="criteria-container" class="criteria-container">
+            <div class="empty-inline" data-i18n="form.criteriaEmpty">Select a category to see its 5 evaluation criteria.</div>
+          </div>
+        </section>
+
+        <!-- 4. Contribution -->
+        <section class="form-section" aria-labelledby="sec-contribution-title">
+          <div class="section-header">
+            <span class="section-number">4</span>
+            <div>
+              <h2 id="sec-contribution-title" data-i18n="form.contribution.title">Contribution</h2>
+              <p class="section-hint" data-i18n="form.contribution.hint">Describe what was done and the evidence of its impact.</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title"><span data-i18n="form.titleLabel">Contribution title</span> <span class="req">*</span></label>
+            <input type="text" id="title" data-field="title" maxlength="120" data-i18n-placeholder="form.titlePlaceholder" placeholder="e.g. Rebuilt the order-tracking platform">
+            <div class="field-meta"><p class="field-error" data-error-for="title"></p><span class="char-counter" data-counter-for="title">0 / 120</span></div>
+          </div>
+          <div class="form-group">
+            <label for="description"><span data-i18n="form.description">Description</span> <span class="req">*</span></label>
+            <textarea id="description" data-field="description" rows="5" maxlength="3000" data-i18n-placeholder="form.descriptionPlaceholder" placeholder="What was the challenge, what was done and how?"></textarea>
+            <div class="field-meta"><p class="field-error" data-error-for="description"></p><span class="char-counter" data-counter-for="description">0 / 3000</span></div>
+          </div>
+          <div class="form-group">
+            <label for="evidence"><span data-i18n="form.evidence">Evidence of impact</span> <span class="req">*</span></label>
+            <textarea id="evidence" data-field="evidence" rows="4" maxlength="3000" data-i18n-placeholder="form.evidencePlaceholder" placeholder="Metrics, results, feedback received…"></textarea>
+            <div class="field-meta"><p class="field-error" data-error-for="evidence"></p><span class="char-counter" data-counter-for="evidence">0 / 3000</span></div>
+          </div>
+        </section>
+
+        <!-- 5. Attachments -->
+        <section class="form-section" aria-labelledby="sec-attachments-title">
+          <div class="section-header">
+            <span class="section-number">5</span>
+            <div>
+              <h2 id="sec-attachments-title" data-i18n="form.attachments.title">Attachments</h2>
+              <p class="section-hint" data-i18n="form.attachments.hint">Optional. Up to 5 files of 10 MB each (PDF, images, Office, TXT, CSV). Only file metadata is stored.</p>
+            </div>
+          </div>
+          <div class="file-upload-area" id="file-drop" tabindex="0" role="button" data-i18n-aria-label="form.dropAria" aria-label="Add attachments">
+            <input type="file" id="file-input" multiple hidden accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv">
+            <span class="upload-icon" aria-hidden="true">⇪</span>
+            <p class="upload-title" data-i18n="form.dropTitle">Drag and drop files here</p>
+            <p class="upload-sub" data-i18n="form.dropSub">or click to browse</p>
+          </div>
+          <ul id="attachment-list" class="attachment-list"></ul>
+          <p class="field-error" data-error-for="attachments"></p>
+        </section>
+
+        <div class="form-actions">
+          <button type="button" id="fill-example" class="btn btn-ghost" data-i18n="form.fillExample">Fill with example</button>
+          <span class="spacer"></span>
+          <button type="button" id="reset-form" class="btn btn-secondary" data-i18n="form.clear">Clear form</button>
+          <button type="submit" class="btn btn-primary" data-i18n="form.review">Review nomination</button>
+        </div>
+      </form>
+
+      <aside class="score-aside" data-i18n-aria-label="score.title" aria-label="Live score">
+        <div class="card score-panel" id="score-panel">
+          <div class="score-panel-header">
+            <h2 data-i18n="score.title">Live score</h2>
+            <span class="live-dot" aria-hidden="true"></span>
+          </div>
+          <p class="score-line" id="score-line" aria-live="polite">Relevance: 0 | Criteria: 0 | Total: 0 / 100</p>
+          <div class="pontuacao-grid">
+            <div class="pontuacao-item"><span class="pontuacao-label" data-i18n="score.relevance">Relevance</span><span class="pontuacao-value" id="score-relevance">0</span></div>
+            <div class="pontuacao-item"><span class="pontuacao-label" data-i18n="score.criteria">Criteria</span><span class="pontuacao-value" id="score-criteria">0</span></div>
+            <div class="pontuacao-item pontuacao-total"><span class="pontuacao-label" data-i18n="score.total">Total</span><span class="pontuacao-value"><span id="score-total">0</span><small>/100</small></span></div>
+          </div>
+          <div class="score-meter" aria-hidden="true">
+            <div class="score-meter-fill" id="score-meter-fill"></div>
+            <span class="score-meter-mark" style="left:60%"></span>
+          </div>
+          <p class="score-status" id="score-status" data-i18n="score.statusIncomplete">Complete category, relevance and all 5 criteria.</p>
+        </div>
+
+        <div class="card guide-card">
+          <h3 data-i18n="guide.title">How scoring works</h3>
+          <ul class="guide-list">
+            <li><span class="grade-chip grade-s">S</span><span data-i18n="guide.s">Exceptional — 10 pts</span></li>
+            <li><span class="grade-chip grade-a">A</span><span data-i18n="guide.a">Significant — 7 pts</span></li>
+            <li><span class="grade-chip grade-b">B</span><span data-i18n="guide.b">Relevant — 4 pts</span></li>
+          </ul>
+          <p class="guide-note" data-i18n="guide.note">Total = relevance (15/30/50) + the 5 criteria. Nominations below 60 points are not eligible.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="section-block" id="my-nominations" aria-labelledby="my-nominations-title">
+      <div class="section-block-header">
+        <div>
+          <h2 id="my-nominations-title" data-i18n="mine.title">My Nominations</h2>
+          <p class="section-hint" data-i18n="mine.hint">Nominations submitted from this browser and their current status.</p>
+        </div>
+        <div class="filters">
+          <label class="filter">
+            <span data-i18n="filter.category">Category</span>
+            <select id="filter-category">
+              <option value="" data-i18n="filter.allCategories">All categories</option>
+              <option value="business" data-i18n="category.business">Business/Project Excellence</option>
+              <option value="cultural" data-i18n="category.cultural">Cultural Impact</option>
+              <option value="innovation" data-i18n="category.innovation">Innovation and AI Excellence</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span data-i18n="filter.status">Status</span>
+            <select id="filter-status">
+              <option value="" data-i18n="filter.allStatuses">All statuses</option>
+              <option value="Pending" data-i18n="status.pending">Pending</option>
+              <option value="Under Review" data-i18n="status.under_review">Under Review</option>
+              <option value="Approved" data-i18n="status.approved">Approved</option>
+              <option value="Rejected" data-i18n="status.rejected">Rejected</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p class="results-count" id="mine-count"></p>
+      <div id="my-nominations-list" class="nomination-grid"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><span data-i18n="footer.text">Horizon Recognition Program · Demonstration prototype — all data stays in your browser.</span></p>
+  </footer>
+
+  <!-- Review modal -->
+  <div class="modal-overlay" id="review-modal" hidden>
+    <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="review-title">
+      <div class="modal-header">
+        <h2 id="review-title" data-i18n="review.title">Review your nomination</h2>
+        <button type="button" class="modal-close" data-close-modal data-i18n-aria-label="common.close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" id="review-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal data-i18n="review.back">Back to edit</button>
+        <button type="button" class="btn btn-primary" id="confirm-submit" data-i18n="review.confirm">Confirm and Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection modal (score below minimum) -->
+  <div class="modal-overlay" id="rejection-modal" hidden data-dismissible="false">
+    <div class="modal modal-sm modal-error" role="alertdialog" aria-modal="true" aria-labelledby="rejection-title">
+      <div class="modal-icon" aria-hidden="true">!</div>
+      <h2 id="rejection-title" data-i18n="rejection.title">Nomination not eligible</h2>
+      <p id="rejection-message" class="modal-message"></p>
+      <p class="modal-note" data-i18n="rejection.note">The nomination was not saved and the form was cleared. Review the criteria and try again.</p>
+      <div class="modal-footer centered">
+        <button type="button" class="btn btn-primary" data-close-modal data-i18n="rejection.ok">Understood</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success modal -->
+  <div class="modal-overlay" id="success-modal" hidden>
+    <div class="modal modal-sm modal-success" role="dialog" aria-modal="true" aria-labelledby="success-title">
+      <div class="modal-icon" aria-hidden="true">✓</div>
+      <h2 id="success-title" data-i18n="success.title">Nomination submitted!</h2>
+      <p id="success-message" class="modal-message"></p>
+      <div class="modal-footer centered">
+        <a href="#my-nominations" class="btn btn-secondary" data-close-modal data-i18n="success.view">View my nominations</a>
+        <button type="button" class="btn btn-primary" data-close-modal data-i18n="success.new">New nomination</button>
+      </div>
+    </div>
+  </div>
+
+  <datalist id="workers-datalist"></datalist>
+
+  <script src="src/workers_data.js"></script>
+  <script src="src/translations.js"></script>
+  <script src="src/core.js"></script>
+  <script src="src/script.js"></script>
+</body>
+</html>

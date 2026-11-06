@@ -1,0 +1,14 @@
+{
+  "name": "horizon-recognition-program",
+  "version": "1.0.0",
+  "description": "Horizon Recognition Program — static prototype of an employee awards platform (nomination, board evaluation, administration).",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "license": "MIT"
+}

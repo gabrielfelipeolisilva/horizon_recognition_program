@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Horizon Recognition Program — evaluation board panel.">
+  <title data-i18n="page.board">Evaluation Board · Horizon Recognition Program</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231428a0'/%3E%3Cpath d='M10 26a10 10 0 0 1 20 0' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M7 30h26' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <!-- Access control: redirects to login.html before the page is painted -->
+  <script src="src/auth.js"></script>
+  <script>HorizonAuth.guardPage('board');</script>
+</head>
+<body data-page="board">
+  <script src="src/theme.js"></script>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Horizon Recognition Program">
+        <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" class="brand-logo-bg"/>
+          <path d="M10 26a10 10 0 0 1 20 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M7 30h26" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M20 9v4M11.5 13l2.5 2.5M28.5 13 26 15.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">Horizon</span>
+          <span class="brand-sub" data-i18n="app.programName">Recognition Program</span>
+        </span>
+      </a>
+      <nav class="main-nav" data-i18n-aria-label="nav.label" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" data-i18n="nav.nominate">Nominate</a>
+        <a href="board.html" class="nav-link active" aria-current="page" data-auth-link="board"><span data-i18n="nav.board">Board</span></a>
+        <a href="admin.html" class="nav-link" data-auth-link="admin"><span data-i18n="nav.admin">Admin</span></a>
+        <a href="presentation.html" class="nav-link" data-i18n="nav.program">Program</a>
+      </nav>
+      <div class="header-actions">
+        <div class="user-chip" id="user-chip">
+          <span class="avatar" id="user-avatar" aria-hidden="true">BM</span>
+          <span class="user-info">
+            <span class="user-name" id="user-name">Board Member</span>
+            <span class="user-role" id="user-role">Evaluator · R&amp;D Division</span>
+          </span>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm logout-btn" data-logout><span aria-hidden="true">⎋</span> <span data-i18n="auth.logout">Sign out</span></button>
+        <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="pt">PT</button>
+        </div>
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <section class="page-hero">
+      <div class="hero-text">
+        <span class="eyebrow" data-i18n="board.eyebrow">Evaluation Board</span>
+        <h1 data-i18n="board.title">Evaluate nominations</h1>
+        <p class="hero-subtitle" data-i18n="board.subtitle">Score each nomination independently. Declare any conflict of interest — conflicted evaluations are excluded from the final average.</p>
+      </div>
+    </section>
+
+    <div class="readonly-banner page-banner" id="readonly-banner" hidden>
+      <span aria-hidden="true">👁</span> <span data-i18n="board.readOnlyBanner">Read-only mode (Administrator): you can follow every nomination and evaluation, but you cannot submit evaluations.</span>
+    </div>
+
+    <section class="stat-row" aria-label="Summary">
+      <div class="stat-card stat-pending"><span class="stat-label" id="stat-label-pending" data-i18n="board.statPending">Pending for me</span><span class="stat-value" id="stat-pending">0</span></div>
+      <div class="stat-card stat-approved"><span class="stat-label" id="stat-label-done" data-i18n="board.statDone">Evaluated by me</span><span class="stat-value" id="stat-done">0</span></div>
+      <div class="stat-card stat-rejected"><span class="stat-label" data-i18n="board.statConflicts">Conflicts declared</span><span class="stat-value" id="stat-conflicts">0</span></div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-block-header">
+        <div class="tabs" role="tablist" data-i18n-aria-label="board.tabsLabel" aria-label="Evaluation lists">
+          <button type="button" class="tab active" role="tab" id="tab-pending" aria-selected="true" aria-controls="panel-pending" data-tab="pending">
+            <span id="tab-pending-label" data-i18n="board.tabPending">Pending Evaluations</span> <span class="tab-count" id="count-pending">0</span>
+          </button>
+          <button type="button" class="tab" role="tab" id="tab-done" aria-selected="false" aria-controls="panel-done" data-tab="done">
+            <span data-i18n="board.tabDone">My Evaluations</span> <span class="tab-count" id="count-done">0</span>
+          </button>
+        </div>
+        <div class="filters">
+          <label class="filter">
+            <span data-i18n="filter.category">Category</span>
+            <select id="board-filter-category">
+              <option value="" data-i18n="filter.allCategories">All categories</option>
+              <option value="business" data-i18n="category.business">Business/Project Excellence</option>
+              <option value="cultural" data-i18n="category.cultural">Cultural Impact</option>
+              <option value="innovation" data-i18n="category.innovation">Innovation and AI Excellence</option>
+            </select>
+          </label>
+          <label class="filter filter-search">
+            <span data-i18n="filter.search">Search</span>
+            <input type="search" id="board-search" data-i18n-placeholder="filter.searchPlaceholder" placeholder="Name, title or ID">
+          </label>
+        </div>
+      </div>
+      <div id="panel-pending" role="tabpanel" aria-labelledby="tab-pending" class="nomination-grid"></div>
+      <div id="panel-done" role="tabpanel" aria-labelledby="tab-done" class="nomination-grid" hidden></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><span data-i18n="footer.text">Horizon Recognition Program · Demonstration prototype — all data stays in your browser.</span></p>
+  </footer>
+
+  <!-- Evaluation modal -->
+  <div class="modal-overlay" id="evaluation-modal" hidden>
+    <div class="modal modal-xl" role="dialog" aria-modal="true" aria-labelledby="evaluation-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="evaluation-title" data-i18n="eval.title">Evaluate nomination</h2>
+          <p class="modal-subtitle" id="evaluation-subtitle"></p>
+        </div>
+        <button type="button" class="modal-close" data-close-modal data-i18n-aria-label="common.close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body evaluation-layout">
+        <div class="evaluation-details" id="evaluation-details"></div>
+        <form class="evaluation-form" id="evaluation-form" novalidate>
+          <section class="conflict-section">
+            <h3 data-i18n="conflict.title">Conflict of interest</h3>
+            <p class="section-hint" data-i18n="conflict.question">Do you have any conflict of interest with the nominator or the nominee(s)?</p>
+            <div class="radio-pills compact" role="radiogroup" data-i18n-aria-label="conflict.title" aria-label="Conflict of interest">
+              <label class="radio-pill"><input type="radio" name="conflict" value="no" data-field="declaredConflict"><span data-i18n="conflict.no">No conflict</span></label>
+              <label class="radio-pill radio-pill-warning"><input type="radio" name="conflict" value="yes"><span data-i18n="conflict.yes">Yes, I have a conflict</span></label>
+            </div>
+            <p class="field-error" data-error-for="declaredConflict"></p>
+            <div id="conflict-fields" class="conflict-fields" hidden>
+              <div class="alert alert-warning" data-i18n="conflict.warning">This evaluation will be recorded as a conflict and excluded from the final average. Scoring is disabled.</div>
+              <div class="form-group">
+                <label for="conflict-reason"><span data-i18n="conflict.reason">Reason</span> <span class="req">*</span></label>
+                <select id="conflict-reason" data-field="conflictReason">
+                  <option value="" data-i18n="form.selectPlaceholder">Select…</option>
+                  <option value="direct_report" data-i18n="conflictReason.direct_report">Direct reporting line</option>
+                  <option value="close_relationship" data-i18n="conflictReason.close_relationship">Close personal relationship</option>
+                  <option value="same_project" data-i18n="conflictReason.same_project">I worked on the same project</option>
+                  <option value="nominator" data-i18n="conflictReason.nominator">I am related to the nominator</option>
+                  <option value="other" data-i18n="conflictReason.other">Other</option>
+                </select>
+                <p class="field-error" data-error-for="conflictReason"></p>
+              </div>
+              <div class="form-group">
+                <label for="conflict-notes"><span data-i18n="conflict.notes">Notes</span> <span class="req">*</span></label>
+                <textarea id="conflict-notes" rows="3" maxlength="500" data-field="conflictNotes" data-i18n-placeholder="conflict.notesPlaceholder" placeholder="Briefly describe the conflict"></textarea>
+                <div class="field-meta"><p class="field-error" data-error-for="conflictNotes"></p><span class="char-counter" data-counter-for="conflict-notes">0 / 500</span></div>
+              </div>
+            </div>
+          </section>
+
+          <fieldset id="scoring-fields" class="scoring-fields">
+            <legend data-i18n="eval.scoringTitle">Your evaluation</legend>
+            <div class="form-group">
+              <label for="eval-relevance"><span data-i18n="form.relevance">Relevance level</span> <span class="req">*</span></label>
+              <select id="eval-relevance" data-field="relevance">
+                <option value="" data-i18n="form.selectRelevance">Select the relevance…</option>
+                <option value="15" data-i18n="relevance.option.15">15 pts — Relevant</option>
+                <option value="30" data-i18n="relevance.option.30">30 pts — Significant</option>
+                <option value="50" data-i18n="relevance.option.50">50 pts — Exceptional</option>
+              </select>
+              <p class="field-error" data-error-for="relevance"></p>
+            </div>
+            <div id="eval-criteria" class="criteria-container compact"></div>
+            <div class="form-group">
+              <label for="eval-comments"><span data-i18n="eval.comments">Comments</span> <span class="req">*</span></label>
+              <textarea id="eval-comments" rows="4" maxlength="1000" data-field="comments" data-i18n-placeholder="eval.commentsPlaceholder" placeholder="Justify your evaluation"></textarea>
+              <div class="field-meta"><p class="field-error" data-error-for="comments"></p><span class="char-counter" data-counter-for="eval-comments">0 / 1000</span></div>
+            </div>
+          </fieldset>
+
+          <div class="card score-panel inline" id="eval-score-panel">
+            <div class="score-panel-header">
+              <h3 data-i18n="score.yourScore">Your score</h3>
+              <span class="live-dot" aria-hidden="true"></span>
+            </div>
+            <p class="score-line" id="eval-score-line" aria-live="polite">Relevance: 0 | Criteria: 0 | Total: 0 / 100</p>
+            <div class="score-meter" aria-hidden="true">
+              <div class="score-meter-fill" id="eval-score-fill"></div>
+              <span class="score-meter-mark" style="left:60%"></span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal data-i18n="common.cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="eval-review-btn" data-i18n="eval.review">Review evaluation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Evaluation review modal -->
+  <div class="modal-overlay" id="eval-review-modal" hidden>
+    <div class="modal modal-md" role="dialog" aria-modal="true" aria-labelledby="eval-review-title">
+      <div class="modal-header">
+        <h2 id="eval-review-title" data-i18n="evalReview.title">Confirm your evaluation</h2>
+        <button type="button" class="modal-close" data-close-modal data-i18n-aria-label="common.close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" id="eval-review-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal data-i18n="review.back">Back to edit</button>
+        <button type="button" class="btn btn-primary" id="eval-confirm-btn" data-i18n="evalReview.confirm">Confirm and Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Read-only evaluation view -->
+  <div class="modal-overlay" id="view-modal" hidden>
+    <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="view-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="view-title" data-i18n="view.title">My evaluation</h2>
+          <p class="modal-subtitle" id="view-subtitle"></p>
+        </div>
+        <button type="button" class="modal-close" data-close-modal data-i18n-aria-label="common.close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" id="view-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-close-modal data-i18n="common.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/workers_data.js"></script>
+  <script src="src/translations.js"></script>
+  <script src="src/core.js"></script>
+  <script src="src/board.js"></script>
+</body>
+</html>

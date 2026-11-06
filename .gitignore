@@ -1,0 +1,21 @@
+# Dependencies (installed with `npm install`, only needed for the tests)
+node_modules/
+
+# Test coverage reports (`npm run test:coverage`)
+coverage/
+
+# Spreadsheets exported from the admin panel
+*.xlsx
+*.xls
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Logs
+npm-debug.log*
+*.log

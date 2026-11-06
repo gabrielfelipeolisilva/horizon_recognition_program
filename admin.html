@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Horizon Recognition Program — administration panel.">
+  <title data-i18n="page.admin">Administration · Horizon Recognition Program</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231428a0'/%3E%3Cpath d='M10 26a10 10 0 0 1 20 0' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M7 30h26' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles.css">
+  <!-- Access control: redirects to login.html before the page is painted -->
+  <script src="src/auth.js"></script>
+  <script>HorizonAuth.guardPage('admin');</script>
+</head>
+<body data-page="admin">
+  <script src="src/theme.js"></script>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Horizon Recognition Program">
+        <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="10" class="brand-logo-bg"/>
+          <path d="M10 26a10 10 0 0 1 20 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M7 30h26" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M20 9v4M11.5 13l2.5 2.5M28.5 13 26 15.5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">Horizon</span>
+          <span class="brand-sub" data-i18n="app.programName">Recognition Program</span>
+        </span>
+      </a>
+      <nav class="main-nav" data-i18n-aria-label="nav.label" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" data-i18n="nav.nominate">Nominate</a>
+        <a href="board.html" class="nav-link" data-auth-link="board"><span data-i18n="nav.board">Board</span></a>
+        <a href="admin.html" class="nav-link active" aria-current="page" data-auth-link="admin"><span data-i18n="nav.admin">Admin</span></a>
+        <a href="presentation.html" class="nav-link" data-i18n="nav.program">Program</a>
+      </nav>
+      <div class="header-actions">
+        <div class="user-chip">
+          <span class="avatar avatar-admin" id="admin-avatar" aria-hidden="true">AD</span>
+          <span class="user-info">
+            <span class="user-name" id="admin-name">Admin</span>
+            <span class="user-role" id="admin-role">Administrator · People &amp; Culture</span>
+          </span>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm logout-btn" data-logout><span aria-hidden="true">⎋</span> <span data-i18n="auth.logout">Sign out</span></button>
+        <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="pt">PT</button>
+        </div>
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <section class="page-hero">
+      <div class="hero-text">
+        <span class="eyebrow" data-i18n="admin.eyebrow">Administration</span>
+        <h1 data-i18n="admin.title">Program control center</h1>
+        <p class="hero-subtitle" data-i18n="admin.subtitle">Track nominations, consolidate board scores, rank each category and export the payment report.</p>
+      </div>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-export" id="export-report"><span aria-hidden="true">⬇</span> <span data-i18n="admin.exportReport">Export Report</span></button>
+        <button type="button" class="btn btn-export" id="export-payments"><span aria-hidden="true">⬇</span> <span data-i18n="admin.exportPayments">Export Payments</span></button>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="stat-row stat-row-4" aria-labelledby="dashboard-title">
+      <h2 id="dashboard-title" class="visually-hidden" data-i18n="admin.dashboard">Dashboard</h2>
+      <div class="stat-card stat-total"><span class="stat-label" data-i18n="admin.statTotal">Total</span><span class="stat-value" id="stat-total">0</span><span class="stat-foot" id="stat-total-foot"></span></div>
+      <div class="stat-card stat-pending"><span class="stat-label" data-i18n="status.pending">Pending</span><span class="stat-value" id="stat-pending">0</span><span class="stat-foot" id="stat-pending-foot"></span></div>
+      <div class="stat-card stat-approved"><span class="stat-label" data-i18n="status.approved">Approved</span><span class="stat-value" id="stat-approved">0</span><span class="stat-foot" id="stat-approved-foot"></span></div>
+      <div class="stat-card stat-rejected"><span class="stat-label" data-i18n="status.rejected">Rejected</span><span class="stat-value" id="stat-rejected">0</span><span class="stat-foot" id="stat-rejected-foot"></span></div>
+    </section>
+
+    <!-- Financial summary -->
+    <section class="section-block" aria-labelledby="financial-title">
+      <div class="section-block-header">
+        <div>
+          <h2 id="financial-title" data-i18n="financial.title">Financial summary</h2>
+          <p class="section-hint" data-i18n="financial.hint">Approved bonuses based on the current ranking. Group prizes are split equally between members.</p>
+        </div>
+      </div>
+      <div class="financial-grid" id="financial-summary"></div>
+    </section>
+
+    <!-- Ranking -->
+    <section class="section-block" aria-labelledby="ranking-title">
+      <div class="section-block-header">
+        <div>
+          <h2 id="ranking-title" data-i18n="ranking.title">Ranking by category</h2>
+          <p class="section-hint" data-i18n="ranking.hint">Final score = average of the board evaluations without conflict. Prizes by position: 1st ★★★, 2nd ★★, 3rd–5th ★.</p>
+        </div>
+        <div class="tabs" role="tablist" id="ranking-tabs" data-i18n-aria-label="ranking.title" aria-label="Ranking by category">
+          <button type="button" class="tab active" role="tab" data-ranking-tab="business" aria-selected="true" data-i18n="category.business">Business/Project Excellence</button>
+          <button type="button" class="tab" role="tab" data-ranking-tab="cultural" aria-selected="false" data-i18n="category.cultural">Cultural Impact</button>
+          <button type="button" class="tab" role="tab" data-ranking-tab="innovation" aria-selected="false" data-i18n="category.innovation">Innovation and AI Excellence</button>
+        </div>
+      </div>
+      <p class="ranking-meta" id="ranking-meta"></p>
+      <div class="table-wrap card" id="ranking-table"></div>
+    </section>
+
+    <!-- Nominations list -->
+    <section class="section-block" aria-labelledby="nominations-title">
+      <div class="section-block-header">
+        <div>
+          <h2 id="nominations-title" data-i18n="list.title">Nominations</h2>
+          <p class="section-hint" data-i18n="list.hint">Select nominations to change their status in bulk, or act on each one.</p>
+        </div>
+        <div class="filters">
+          <label class="filter">
+            <span data-i18n="filter.category">Category</span>
+            <select id="admin-filter-category">
+              <option value="" data-i18n="filter.allCategories">All categories</option>
+              <option value="business" data-i18n="category.business">Business/Project Excellence</option>
+              <option value="cultural" data-i18n="category.cultural">Cultural Impact</option>
+              <option value="innovation" data-i18n="category.innovation">Innovation and AI Excellence</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span data-i18n="filter.status">Status</span>
+            <select id="admin-filter-status">
+              <option value="" data-i18n="filter.allStatuses">All statuses</option>
+              <option value="Pending" data-i18n="status.pending">Pending</option>
+              <option value="Under Review" data-i18n="status.under_review">Under Review</option>
+              <option value="Approved" data-i18n="status.approved">Approved</option>
+              <option value="Rejected" data-i18n="status.rejected">Rejected</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span data-i18n="filter.type">Type</span>
+            <select id="admin-filter-type">
+              <option value="" data-i18n="filter.allTypes">All types</option>
+              <option value="individual" data-i18n="type.individual">Individual</option>
+              <option value="grupo" data-i18n="type.grupo">Group</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span data-i18n="filter.origin">Origin</span>
+            <select id="admin-filter-origin">
+              <option value="" data-i18n="filter.allOrigins">All origins</option>
+              <option value="self" data-i18n="origin.self">Self-nomination</option>
+              <option value="others" data-i18n="origin.others">Nominated by others</option>
+            </select>
+          </label>
+          <label class="filter filter-search">
+            <span data-i18n="filter.search">Search</span>
+            <input type="search" id="admin-search" data-i18n-placeholder="filter.searchPlaceholder" placeholder="Name, title or ID">
+          </label>
+        </div>
+      </div>
+
+      <div class="bulk-bar" id="bulk-bar" hidden>
+        <span class="bulk-count" id="bulk-count"></span>
+        <div class="bulk-actions">
+          <button type="button" class="btn btn-sm btn-info" data-bulk-status="Under Review" data-i18n="action.underReview">Under Review</button>
+          <button type="button" class="btn btn-sm btn-success" data-bulk-status="Approved" data-i18n="action.approve">Approve</button>
+          <button type="button" class="btn btn-sm btn-danger" data-bulk-status="Rejected" data-i18n="action.reject">Reject</button>
+          <button type="button" class="btn btn-sm btn-ghost" id="bulk-clear" data-i18n="bulk.clear">Clear selection</button>
+        </div>
+      </div>
+
+      <div class="table-wrap card">
+        <table class="data-table nominations-table">
+          <thead>
+            <tr>
+              <th class="col-check"><input type="checkbox" id="select-all" data-i18n-aria-label="bulk.selectAll" aria-label="Select all"></th>
+              <th data-i18n="table.nomination">Nomination</th>
+              <th data-i18n="table.nominees">Nominee(s)</th>
+              <th data-i18n="filter.category">Category</th>
+              <th class="num" data-i18n="table.indexScore">Index</th>
+              <th class="num" data-i18n="table.finalScore">Final</th>
+              <th class="num" data-i18n="table.evaluations">Evals</th>
+              <th data-i18n="filter.status">Status</th>
+              <th class="col-actions" data-i18n="table.actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="nominations-body"></tbody>
+        </table>
+      </div>
+      <p class="results-count" id="list-count"></p>
+    </section>
+
+    <!-- Workers upload -->
+    <section class="section-block" aria-labelledby="workers-title">
+      <div class="section-block-header">
+        <div>
+          <h2 id="workers-title" data-i18n="workers.title">Workers directory</h2>
+          <p class="section-hint" data-i18n="workers.hint">Upload a .xlsx or .csv file with the columns id, name, area, location, cl and email. It replaces the directory used by the form autofill.</p>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="download-template" data-i18n="workers.template">Download template</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="reset-workers" data-i18n="workers.reset">Restore default directory</button>
+        </div>
+      </div>
+      <div class="workers-grid">
+        <div class="file-upload-area" id="workers-drop" tabindex="0" role="button" data-i18n-aria-label="workers.dropAria" aria-label="Upload workers spreadsheet">
+          <input type="file" id="workers-input" hidden accept=".xlsx,.xls,.csv">
+          <span class="upload-icon" aria-hidden="true">📄</span>
+          <p class="upload-title" data-i18n="workers.dropTitle">Drop the spreadsheet here</p>
+          <p class="upload-sub" data-i18n="workers.dropSub">.xlsx or .csv · click to browse</p>
+        </div>
+        <div class="card workers-info">
+          <div id="workers-source"></div>
+          <div id="workers-status" class="upload-status" role="status" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo tools -->
+    <section class="section-block" aria-labelledby="tools-title">
+      <div class="card tools-card">
+        <div>
+          <h2 id="tools-title" data-i18n="tools.title">Demo tools</h2>
+          <p class="section-hint" data-i18n="tools.hint">Load sample nominations with board evaluations to explore the ranking, or clear every record stored in this browser.</p>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn btn-secondary" id="load-demo" data-i18n="tools.loadDemo">Load demo data</button>
+          <button type="button" class="btn btn-danger-outline" id="clear-data" data-i18n="tools.clear">Clear all nominations</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><span data-i18n="footer.text">Horizon Recognition Program · Demonstration prototype — all data stays in your browser.</span></p>
+  </footer>
+
+  <!-- Details modal -->
+  <div class="modal-overlay" id="details-modal" hidden>
+    <div class="modal modal-xl" role="dialog" aria-modal="true" aria-labelledby="details-title">
+      <div class="modal-header">
+        <div>
+          <h2 id="details-title" data-i18n="adminDetails.title">Nomination details</h2>
+          <p class="modal-subtitle" id="details-subtitle"></p>
+        </div>
+        <button type="button" class="modal-close" data-close-modal data-i18n-aria-label="common.close" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" id="details-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal data-i18n="common.close">Close</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-info" data-detail-status="Under Review" data-i18n="action.underReview">Under Review</button>
+        <button type="button" class="btn btn-danger" data-detail-status="Rejected" data-i18n="action.reject">Reject</button>
+        <button type="button" class="btn btn-success" data-detail-status="Approved" data-i18n="action.approve">Approve</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation modal -->
+  <div class="modal-overlay" id="confirm-modal" hidden>
+    <div class="modal modal-sm" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="modal-icon modal-icon-info" id="confirm-icon" aria-hidden="true">?</div>
+      <h2 id="confirm-title"></h2>
+      <p id="confirm-message" class="modal-message"></p>
+      <div class="modal-footer centered">
+        <button type="button" class="btn btn-secondary" data-close-modal data-i18n="common.cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirm-ok" data-i18n="common.confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+  <script src="src/workers_data.js"></script>
+  <script src="src/translations.js"></script>
+  <script src="src/core.js"></script>
+  <script src="src/admin.js"></script>
+</body>
+</html>
